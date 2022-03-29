@@ -1,6 +1,5 @@
 import mongoose from 'mongoose'
-import config from './config.js'
-// console.log(process.env.MONGODB_URI)
+import config from '../../config.js'
 
 mongoose.connect(config.MONGODB_URI
 //     , {

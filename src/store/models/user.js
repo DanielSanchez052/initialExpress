@@ -3,14 +3,26 @@ import bcrypt from 'bcryptjs'
 
 const Schema = mongoose.Schema
 
+/**
+ * @typedef {object} Auth
+ * @property {string} username.required
+ * @property {string} email.required
+ * @property {string} password.required
+ * @property {array<Role>} roles
+ */
+
+
 const userSchema = new Schema({
     username:{
         type: String,
-        unique: true
+        unique: true,
+        required: true
     },
     email:{
         type: String,
-        unique: true
+        unique: true,
+        required: true
+
     },
     password:{
         type: String,

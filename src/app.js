@@ -1,33 +1,41 @@
 import express from 'express'
-import cors from "cors";
-import morgan from "morgan";
-import helmet from "helmet";
+import cors from "cors"
+import morgan from "morgan"
+import helmet from "helmet"
+import expressJSDocSwagger from 'express-jsdoc-swagger'
 
-import pkg from '../package.json'
+import pkg from '../package.json' assert {type: "json"}
+import definition from './docs/definition.js'
+import config from '../config.js'
 
-import authRoutes from './routes/auth.routes.js'
-import verifyToken from './middlewares/authmiddlewares.js'
+import authRoutes from './modules/auth/auth.routes.js'
+import verifyToken from './modules/auth/auth.middlewares.js'
 
 const app = express()
 
 //settings
 app.set("pkg",pkg)
-app.set("port", process.env.PORT || 4000)
+app.set("port", config.PORT)
 
 
-//Middlewaresm 
+//config cors
 const corsConfig= {
     // origin:"http://localhost:3000"
 }
-
 app.use(cors(corsConfig))
+
+//middlewares
 app.use(helmet())
 app.use(morgan("dev"))
 app.use(express.json())
-// app.use(express.urlencoded({ extended: false }))
 
-//Initial route
-app.get("/", (req, res) => {
+
+//docs
+expressJSDocSwagger(app)(definition)
+
+
+//initial route
+app.get("/api/v1/", (req, res) => {
     res.json({
         message: "API Rest",
         name: app.get("pkg").name,
@@ -37,13 +45,10 @@ app.get("/", (req, res) => {
     });
 });
 
-app.get("/api/task" , verifyToken,(req,res)=>{
 
-    res.json({message:"Tasks"})
-})
+//routes
+app.use("/api/v1/auth", authRoutes)
 
-//Routes
-app.use("/api/auth", authRoutes)
 
 export default app
 
