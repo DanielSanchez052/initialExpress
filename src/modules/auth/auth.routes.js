@@ -136,7 +136,7 @@ async function signIn (req, res) {
 
         const token = await authCtrl.signIn (email, password)
 
-        response.success(req, res, 200, token)
+        response.success(req, res, 201, token)
     } catch (error) {
         response.error(req, res, error.status, error.message)
     }

@@ -9,6 +9,7 @@ import definition from './docs/definition.js'
 import config from '../config.js'
 
 import authRoutes from './modules/auth/auth.routes.js'
+import roleRoutes from './modules/role/role.routes.js'
 import verifyToken from './modules/auth/auth.middlewares.js'
 
 const app = express()
@@ -20,7 +21,7 @@ app.set("port", config.PORT)
 
 //config cors
 const corsConfig= {
-    // origin:"http://localhost:3000"
+  origin:"*"
 }
 app.use(cors(corsConfig))
 
@@ -48,6 +49,7 @@ app.get("/api/v1/", (req, res) => {
 
 //routes
 app.use("/api/v1/auth", authRoutes)
+app.use("/api/v1/role", roleRoutes)
 
 
 export default app

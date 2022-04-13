@@ -56,7 +56,6 @@ export const signIn = async (email, password)=>{
             }
         }
     }catch(error){
-        console.log(error)
         throw {status:error.status, message: error.message}
     }
 }
